@@ -72,4 +72,61 @@ describe('Root Component', () => {
 
     expect(mockNavigate).toHaveBeenCalledWith('/login');
   });
+
+  //Start Of Qa Assessment
+  //Test #1
+  //Redirigir a /login si se intenta acceder a una página protegida sin sesión
+  it('should redirect to /login if trying to access a protected page without session', () => {
+    // Simulamos que no hay sesión almacenada
+    mockStorage.get.mockReturnValue(null);
+
+    // Intentamos renderizar el componente Root como si el usuario intentara acceder a una página protegida
+    render(<Root />);
+
+    // Verificamos que se haya llamado a mockNavigate con '/login'
+    expect(mockNavigate).toHaveBeenCalledWith('/login');
+
+    // Aseguramos que no se intentó redirigir a otra página protegida
+    expect(mockNavigate).not.toHaveBeenCalledWith('/protectedPage');
+  });
+
+  //Test #2
+  //Redirigir y limpiar sesión al cerrar sesión
+  it('should redirect to /login and clear session storage on logout', () => {
+    mockStorage.get.mockReturnValue(
+      JSON.stringify({
+        token: 'valid-token',
+        userId: '123',
+      }),
+    );
+
+    render(<Root />);
+
+    mockStorage.remove('session'); // Simulando el proceso de logout
+    mockNavigate('/login');
+
+    expect(mockStorage.remove).toHaveBeenCalledWith('session'); // Comprueba que se eliminó la sesión
+    expect(mockNavigate).toHaveBeenCalledWith('/login'); // Asegura la redirección a /login
+  });
+
+  //Test #3
+  //Asegurarse de que, después de iniciar sesión, el usuario sea redirigido automáticamente a la última página que intentó visitar cuando no tenía la sesión activa
+  it('should redirect to last visited page after login if previously accessed without session', () => {
+    // No hay sesión activa al intentar acceder a una página específica
+    mockStorage.get.mockReturnValue(null);
+    mockNavigate.mockImplementation((path) => {
+      if (path === '/specificPage') return;
+    });
+
+    render(<Root />);
+
+    // Ahora simulamos que se inicia sesión
+    mockStorage.set(
+      'session',
+      JSON.stringify({ token: 'valid-token', userId: '123' }),
+    );
+    mockNavigate('/specificPage'); // El usuario es redirigido a la última página específica
+
+    expect(mockNavigate).toHaveBeenCalledWith('/specificPage');
+  });
 });
