@@ -1,0 +1,3 @@
+El título de la página coincide: Playwright is rapidly gaining popularity in the automation field
+El texto del autor coincide: "by Ernesto Sabato (1948)"
+Se hizo clic en el autor.

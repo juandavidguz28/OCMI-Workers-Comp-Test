@@ -1,0 +1,29 @@
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="5.474194000000001">
+<testsuite name="tests\app.spec.ts" timestamp="2024-11-15T18:56:44.148Z" hostname="chromium" tests="1" failures="1" skipped="0" time="4.457" errors="0">
+<testcase name="OCMI Workers Comp - End-to-End User Scenario › Complete User Flow: Register, Login, Create and Update Post, Set Favorite Book" classname="tests\app.spec.ts" time="4.457">
+<failure message="app.spec.ts:26:9 Complete User Flow: Register, Login, Create and Update Post, Set Favorite Book" type="FAILURE">
+<![CDATA[  [chromium] › tests\app.spec.ts:26:9 › OCMI Workers Comp - End-to-End User Scenario › Complete User Flow: Register, Login, Create and Update Post, Set Favorite Book › Create One 
+
+    Error: locator.click: Target page, context or browser has been closed
+    Call log:
+      - waiting for locator('//*[@class=\'inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100\']')
+
+
+       at pages\OcmiRegister.ts:28
+
+      26 |         await this.page.locator(this.confirmPasswordAssessment).fill(passwordAssessment);
+      27 |         await this.page.locator(this.createAccountBtn).click();
+    > 28 |         await this.page.locator(this.logOut).click();
+         |                                              ^
+      29 |         //await this.page.pause();
+      30 |     }
+      31 |  
+
+        at OcmiRegister.createAccount (D:\PruebasTrabajos\qa-assessment\PlaywrightAssessment\pages\OcmiRegister.ts:28:46)
+        at D:\PruebasTrabajos\qa-assessment\PlaywrightAssessment\tests\app.spec.ts:37:13
+        at D:\PruebasTrabajos\qa-assessment\PlaywrightAssessment\tests\app.spec.ts:35:8
+]]>
+</failure>
+</testcase>
+</testsuite>
+</testsuites>
